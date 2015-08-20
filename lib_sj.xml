@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="library" version="2.5" method="install">
+    <libraryname>lib_sj</libraryname>
+    <name>SJ! Extension Library</name>
+    <author>Umutcan Simsek</author>
+    <creationDate>August 2015</creationDate>
+    <copyright>TH Mittelhessen 2015</copyright>
+    <licence>GNU GPL v.2</licence>
+    <authorUrl>www.mni.thm.de</authorUrl>
+    <version>1.0.0</version>
+    <description>Set of third-party libraries for semantic joomla extension</description>
+    <files>
+        <file>index.html</file>
+        <file>lib_sj.xml</file>
+        <file>httpful.phar</file>
+        <folder>php_sql_parser</folder>
+        <folder>easyrdf</folder>
+    </files>
+
+</extension>
