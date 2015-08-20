@@ -24,10 +24,10 @@ abstract class Operation {
         $this->_result = null;
     }
 
-    public  function run($url, $data=null, array $options=null)
+    public  function run($url, $data, array $options=null)
     {
         if ($this->_method == GET) {
-             $url = $url . http_build_query($options);
+             $url = $url . http_build_query($data);
              $this->_result=Request::get($url)->send();
         }
         else if ($this->_method == POST) {
@@ -38,17 +38,17 @@ abstract class Operation {
                 $request = $request->addHeader($key,$hdr);
 
 
-            if ($this->headers["Content-Type"] = "application/x-www-form-urlencoded")
-                $request = $request->body(http_build_query($options));
+            if ($this->headers["Content-Type"] = "application/x-www-form-urlencoded" and is_array($data))
+                $request = $request->body(http_build_query($data));
             else
                 $request = $request->body($data);
 
             $this->_result = $request->send();
         }
 
-        $response=\Httpful\Request::post($url)->
-      authenticateWith("admin","admin")->addHeader("Accept","application/rdf+xml")->
-        body($data, 'text/plain')->send();
+  //      $response=\Httpful\Request::post($url)->
+    //  authenticateWith("admin","admin")->addHeader("Accept","application/rdf+xml")->
+      //  body($data, 'text/plain')->send();
     }
     public abstract function getResult();
 }

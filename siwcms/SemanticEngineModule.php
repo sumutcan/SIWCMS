@@ -9,7 +9,7 @@
 namespace siwcms;
 
 
-class SemanticEngineModule {
+abstract class SemanticEngineModule {
 
     /**
      * Module RestFul API url

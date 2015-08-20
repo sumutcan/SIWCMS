@@ -9,7 +9,7 @@
 namespace siwcms;
 
 
-class SemanticEngineOptions {
+abstract class SemanticEngineOptions {
     private $_apiKey;
     private $auth;
 

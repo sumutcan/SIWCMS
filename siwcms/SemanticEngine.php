@@ -7,7 +7,7 @@
  */
 namespace siwcms;
 require_once "SemanticEngineModule.php";
-class SemanticEngine {
+abstract class SemanticEngine {
 
     private $_modules = array();
     private $_options;
