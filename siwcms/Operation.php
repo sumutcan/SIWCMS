@@ -9,7 +9,7 @@
 namespace siwcms;
 
 
-use Httpful\Httpful;
+use Httpful\Request;
 
 abstract class Operation {
 
@@ -28,13 +28,13 @@ abstract class Operation {
     {
         if ($this->_method == GET) {
              $url = $url . http_build_query($options);
-             $this->_result=\Httpful\Request::get($url)->send();
+             $this->_result=Request::get($url)->send();
         }
         else if ($this->_method == POST) {
 
-            $request = \Httpful\Request::post($url);
+            $request = Request::post($url);
 
-            foreach ($headers as $key => $hdr)
+            foreach ($this->headers as $key => $hdr)
                 $request = $request->addHeader($key,$hdr);
 
 
@@ -46,9 +46,9 @@ abstract class Operation {
             $this->_result = $request->send();
         }
 
- //       $response=\Httpful\Request::post($url)->
- //       authenticateWith("admin","admin")->addHeader("Accept","application/rdf+xml")->
- //       body($data, 'text/plain')->send();
+        $response=\Httpful\Request::post($url)->
+      authenticateWith("admin","admin")->addHeader("Accept","application/rdf+xml")->
+        body($data, 'text/plain')->send();
     }
     public abstract function getResult();
 }

@@ -10,11 +10,17 @@ require_once "SemanticEngineModule.php";
 class SemanticEngine {
 
     private $_modules = array();
-    private $_apiKey;
+    private $_options;
 
-    public function __construct($apiKey=null)
+    /**
+     * @param null $apiKey
+     * @param null $auth - "username","password" format
+     */
+    public function __construct($apiKey=null,$auth=null)
     {
-        $this->_apiKey = $apiKey;
+        $this->_options = new SemanticEngineOptions();
+        $this->_options->setApiKey($apiKey);
+        $this->_options->setAuth($auth);
     }
 
     /**
@@ -31,8 +37,13 @@ class SemanticEngine {
      * @param $moduleName
      * @return mixed
      */
-    public function getModule($moduleName)
+    private function getModule($moduleName)
     {
        return $this->_modules[$moduleName];
+    }
+
+    public function runModule($moduleName, $operationName, $data)
+    {
+        $this->getModule($moduleName)->runOperation($operationName,$data,$this->_options);
     }
 }

@@ -18,7 +18,7 @@ class SemanticEngineModule {
     private $_url;
     private $_operations = array();
 
-    public function registerOperation($operationName,\siwcms\Operation $operation)
+    public function registerOperation($operationName, Operation $operation)
     {
         $this->_operations[$operationName] = $operation;
     }
@@ -27,9 +27,10 @@ class SemanticEngineModule {
      * @param $operationName
      * @param array $options
      */
-    public function runOperation($operationName, array $options = null)
+    public function runOperation($operationName, $data, SemanticEngineOptions $semEngOptions)
     {
-        $this->_operations[$operationName]->run();
+        $options = array();
+        $this->_operations[$operationName]->run($this->_url,$data,$options);
     }
 
 }
