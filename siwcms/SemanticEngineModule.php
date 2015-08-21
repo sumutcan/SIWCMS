@@ -16,6 +16,41 @@ abstract class SemanticEngineModule {
      * @var
      */
     private $_url;
+
+    private $_moduleOptions = array();
+
+    /**
+     * @return array
+     */
+    public function getModuleOptions()
+    {
+        return $this->_moduleOptions;
+    }
+
+    /**
+     * @param array $moduleOptions
+     */
+    public function setModuleOptions(array $moduleOptions)
+    {
+        $this->_moduleOptions = $moduleOptions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->_url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->_url = $url;
+    }
+
     private $_operations = array();
 
     public function registerOperation($operationName, Operation $operation)
@@ -30,7 +65,12 @@ abstract class SemanticEngineModule {
     public function runOperation($operationName, $data, SemanticEngineOptions $semEngOptions)
     {
         $options = array();
-        $this->_operations[$operationName]->run($this->_url,$data,$options);
+        $auth = $semEngOptions->getAuth();
+        $apiKey = $semEngOptions->getApiKey();
+        array_merge($options,$semEngOptions->getCustomHeaders());
+        array_merge($options,$this->_moduleOptions);
+        $this->_operations[$operationName]->run($this->_url,$data,$options,$auth,$apiKey);
+        return $this->_operations[$operationName]->getResult();
     }
 
 }

@@ -7,20 +7,16 @@
  */
 namespace siwcms;
 require_once "SemanticEngineModule.php";
+require_once "SemanticEngineOptions.php";
 abstract class SemanticEngine {
 
     private $_modules = array();
     private $_options;
 
-    /**
-     * @param null $apiKey
-     * @param null $auth - "username","password" format
-     */
-    public function __construct($apiKey=null,$auth=null)
+
+    public function __construct(SemanticEngineOptions $options)
     {
-        $this->_options = new SemanticEngineOptions();
-        $this->_options->setApiKey($apiKey);
-        $this->_options->setAuth($auth);
+        $this->_options = $options;
     }
 
     /**
@@ -44,6 +40,6 @@ abstract class SemanticEngine {
 
     public function runModule($moduleName, $operationName, $data)
     {
-        $this->getModule($moduleName)->runOperation($operationName,$data,$this->_options);
+       return $this->getModule($moduleName)->runOperation($operationName,$data,$this->_options);
     }
 }

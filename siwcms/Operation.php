@@ -6,10 +6,13 @@
  * Time: 10:44 PM
  */
 
+
 namespace siwcms;
 
+use Httpful;
 
-use Httpful\Request;
+require_once '../Httpful/Bootstrap.php';
+Httpful\Bootstrap::init();
 
 abstract class Operation {
 
@@ -24,13 +27,23 @@ abstract class Operation {
         $this->_result = null;
     }
 
-    public  function run($url, $data, array $options=null)
+    public abstract function run($url, $data, array $options=null, $auth=null, $apiKey = null);
+
+    public  function sendRequest($url, $data, array $options=null, $auth=null, $apiKey = null)
     {
+
+        array_merge($this->_headers,$options);
+
+
         if ($this->_method == GET) {
-             $url = $url . http_build_query($data);
+
+            $url = $url . http_build_query($data);
              $this->_result=Request::get($url)->send();
         }
         else if ($this->_method == POST) {
+
+            if (isset($apiKey))
+                $url .=array_keys($apiKey)[0]."=".array_values($apiKey)[0];
 
             $request = Request::post($url);
 
@@ -43,12 +56,13 @@ abstract class Operation {
             else
                 $request = $request->body($data);
 
+            if (isset($auth))
+                $request = $request->authenticateWith(array_keys($auth)[0],array_values($auth)[0]);
+
             $this->_result = $request->send();
         }
 
-  //      $response=\Httpful\Request::post($url)->
-    //  authenticateWith("admin","admin")->addHeader("Accept","application/rdf+xml")->
-      //  body($data, 'text/plain')->send();
+
     }
     public abstract function getResult();
 }

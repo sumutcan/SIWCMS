@@ -10,9 +10,9 @@ namespace siwcms;
 
 
 abstract class SemanticEngineOptions {
-    private $_apiKey;
-    private $auth;
-
+    private $_apiKey = array();
+    private $_auth = array();
+    private $_customHeaders = array();
     /**
      * @return mixed
      */
@@ -24,25 +24,44 @@ abstract class SemanticEngineOptions {
     /**
      * @param mixed $apiKey
      */
-    public function setApiKey($apiKey)
+    public function setApiKey($apiKeyName, $apiKey)
     {
-        $this->_apiKey = $apiKey;
+        if (array_count_values($this->_apiKey) > 0) {
+            unset($this->_apiKey);
+            $this->_apiKey = array();
+            $this->_apiKey[$apiKeyName] = $apiKey;
+            return;
+        }
+
+        $this->_apiKey[$apiKeyName] = $apiKey;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getAuth()
     {
-        return $this->auth;
+        return $this->_auth;
+    }
+
+
+    public function setAuth($username,$password)
+    {
+        $this->_auth[$username] = $password;
+    }
+
+    public function addCustomHeader($key,$value)
+    {
+        $this->_customHeaders[$key] = $value;
     }
 
     /**
-     * @param mixed $auth
+     * @return array
      */
-    public function setAuth($auth)
+    public function getCustomHeaders()
     {
-        $this->auth = $auth;
+        return $this->_customHeaders;
     }
+
 
 }

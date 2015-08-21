@@ -9,3 +9,7 @@ namespace siwcms;
 define("POST","post");
 define("GET","get");
 require_once "Enhancement.php";
+require_once "SemanticEngine.php";
+require_once "Operation.php";
+require_once "SemanticEngineModule.php";
+
