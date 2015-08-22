@@ -15,6 +15,7 @@
         <file>httpful.phar</file>
         <folder>php_sql_parser</folder>
         <folder>easyrdf</folder>
+        <folder>siwcms</folder>
     </files>
 
 </extension>
