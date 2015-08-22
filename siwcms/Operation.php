@@ -8,11 +8,7 @@
 
 
 namespace siwcms;
-
-use Httpful;
-
-require_once '../Httpful/Bootstrap.php';
-Httpful\Bootstrap::init();
+use \Httpful\Request;
 
 abstract class Operation {
 
@@ -47,7 +43,7 @@ abstract class Operation {
 
             $request = Request::post($url);
 
-            foreach ($this->headers as $key => $hdr)
+            foreach ($this->_headers as $key => $hdr)
                 $request = $request->addHeader($key,$hdr);
 
 
