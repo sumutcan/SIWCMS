@@ -242,3 +242,4 @@ require_once "EasyRdf/TypeMapper.php";
  * @see EasyRdf_Utils
  */
 require_once "EasyRdf/Utils.php";
+

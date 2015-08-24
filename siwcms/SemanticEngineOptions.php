@@ -10,7 +10,7 @@ namespace siwcms;
 
 
 abstract class SemanticEngineOptions {
-    private $_apiKey = array();
+    private $_apiKey = null;
     private $_auth = array();
     private $_customHeaders = array();
     /**
@@ -22,12 +22,12 @@ abstract class SemanticEngineOptions {
     }
 
     /**
+     * @param $apiKeyName
      * @param mixed $apiKey
      */
     public function setApiKey($apiKeyName, $apiKey)
     {
-        if (array_count_values($this->_apiKey) > 0) {
-            unset($this->_apiKey);
+        if (!$apiKey) {
             $this->_apiKey = array();
             $this->_apiKey[$apiKeyName] = $apiKey;
             return;

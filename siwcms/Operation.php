@@ -12,7 +12,7 @@ use \Httpful\Request;
 
 abstract class Operation {
 
-    protected $_result;
+    private   $_result;
     private   $_method;
     private   $_headers;
 
@@ -23,9 +23,35 @@ abstract class Operation {
         $this->_result = null;
     }
 
-    public abstract function run($url, $data, array $options=null, $auth=null, $apiKey = null);
 
-    public  function sendRequest($url, $data, array $options=null, $auth=null, $apiKey = null)
+    /**
+     * @param $url
+     * @param $data
+     * @param array $options
+     * @param null $auth
+     * @param null $apiKey
+     */
+    public final function run($url, $data, array $options=null, $auth=null, $apiKey = null)
+    {
+        $this->preRun();
+        $this->sendRequest($url, $data, $options, $auth, $apiKey);
+        return $this->processResult();
+
+
+    }
+
+    /**
+     * @return null
+     */
+    protected final function getResult()
+    {
+        return $this->_result;
+    }
+
+    protected abstract function preRun();
+
+
+    private function sendRequest($url, $data, array $options=null, $auth=null, $apiKey = null)
     {
 
         array_merge($this->_headers,$options);
@@ -60,5 +86,17 @@ abstract class Operation {
 
 
     }
-    public abstract function getResult();
+    protected abstract function processResult();
+
+    /**
+     * @param $key
+     * @param $value
+     *
+     * Adds custom headers to request.
+     */
+    protected function addCustomHeader($key, $value)
+    {
+        $this->_headers[$key] = $value;
+    }
+
 }

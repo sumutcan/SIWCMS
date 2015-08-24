@@ -60,7 +60,10 @@ abstract class SemanticEngineModule {
 
     /**
      * @param $operationName
-     * @param array $options
+     * @param $data
+     * @param SemanticEngineOptions $semEngOptions
+     * @return
+     * @internal param array $options
      */
     public function runOperation($operationName, $data, SemanticEngineOptions $semEngOptions)
     {
@@ -69,8 +72,8 @@ abstract class SemanticEngineModule {
         $apiKey = $semEngOptions->getApiKey();
         array_merge($options,$semEngOptions->getCustomHeaders());
         array_merge($options,$this->_moduleOptions);
-        $this->_operations[$operationName]->run($this->_url,$data,$options,$auth,$apiKey);
-        return $this->_operations[$operationName]->getResult();
+        return $this->_operations[$operationName]->run($this->_url,$data,$options,$auth,$apiKey);
+
     }
 
 }
