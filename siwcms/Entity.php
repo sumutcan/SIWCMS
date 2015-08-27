@@ -8,10 +8,10 @@
 namespace siwcms;
 
 use EasyRdf_Resource;
-use EasyRdf_TypeMapper;
 use EasyRdf_Graph;
 
-abstract class Entity extends EasyRdf_Resource{
+abstract class Entity extends EasyRdf_Resource
+{
 
    //private $_id = array();
     //private $_types = array();
@@ -35,7 +35,9 @@ abstract class Entity extends EasyRdf_Resource{
      */
     public function getId()
     {
+
         return parent::getUri();
+
     }
 
     /**
@@ -79,7 +81,7 @@ abstract class Entity extends EasyRdf_Resource{
 
     public function getEntityID()
     {
-        return $this->getId()->localName();
+        return parent::localName();
     }
 
 
