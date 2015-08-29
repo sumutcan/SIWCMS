@@ -8,7 +8,6 @@
 
 namespace siwcms;
 
-
 abstract class SemanticEngineOptions {
     private $_apiKey = null;
     private $_auth = array();

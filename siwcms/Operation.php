@@ -14,7 +14,24 @@ abstract class Operation {
 
     private   $_result;
     private   $_method;
-    private   $_headers;
+    private   $_headers=array();
+    private   $_data;
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->_data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data)
+    {
+        $this->_data = $data;
+    }
 
     public function __construct($method=POST,array $headers=null)
     {
@@ -33,8 +50,10 @@ abstract class Operation {
      */
     public final function run($url, $data, array $options=null, $auth=null, $apiKey = null)
     {
+
+        $this->setData($data);
         $this->preRun();
-        $this->sendRequest($url, $data, $options, $auth, $apiKey);
+        $this->sendRequest($url, $this->getData(), $options, $auth, $apiKey);
         return $this->processResult();
 
 
